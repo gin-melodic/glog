@@ -18,7 +18,7 @@ package setup
 
 import (
 	"github.com/cockroachdb/errors"
-	"github.com/gin7758258/gin-logger.git/internal/formatter"
+	"github.com/gin7758258/gin-logger/internal/formatter"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"

@@ -3,7 +3,7 @@ package gin_gonic
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	gin_logger "github.com/gin7758258/gin-logger.git"
+	ginlogger "github.com/gin7758258/gin-logger"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"io"
@@ -17,7 +17,7 @@ func testLogHandle(c *gin.Context) {}
 func TestInjectLogger(t *testing.T) {
 	const tDir = "./gin-gonic-log"
 	_ = os.RemoveAll(tDir)
-	err := gin_logger.InitGlobalLogger(&gin_logger.LoggerOptions{
+	err := ginlogger.InitGlobalLogger(&ginlogger.LoggerOptions{
 		MinAllowLevel:    logrus.DebugLevel,
 		OutputDir:        tDir,
 		FilePrefix:       "gin-gonic-test",

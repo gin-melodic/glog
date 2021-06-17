@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"github.com/cockroachdb/errors"
 	"github.com/gin-gonic/gin"
-	gin_logger "github.com/gin7758258/gin-logger.git"
+	ginlogger "github.com/gin7758258/gin-logger"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -94,7 +94,7 @@ func InjectLogger(options *Options) gin.HandlerFunc {
 			requestExtInfo = options.CustomRequest(c.Request) + " |"
 		}
 		// output request
-		gin_logger.ShareLogger().Infof("REQ -> | %15s | %s %s | %s | %s %s", c.ClientIP(), c.Request.Method,
+		ginlogger.ShareLogger().Infof("REQ -> | %15s | %s %s | %s | %s %s", c.ClientIP(), c.Request.Method,
 			path, query, requestExtInfo, body)
 
 		// parse response
@@ -118,9 +118,9 @@ func InjectLogger(options *Options) gin.HandlerFunc {
 			responseExtInfo = options.CustomResponseWriter(c.Writer) + " |"
 		}
 		// output response
-		logFunc := gin_logger.ShareLogger().Infof
+		logFunc := ginlogger.ShareLogger().Infof
 		if c.Writer.Status() > http.StatusBadRequest {
-			logFunc = gin_logger.ShareLogger().Errorf
+			logFunc = ginlogger.ShareLogger().Errorf
 		}
 		logFunc("<- RESP | %15s | %3d | %13v | %s %s | %s %s", c.ClientIP(), c.Writer.Status(),
 			excuteDurtion, c.Request.Method, path, responseExtInfo, respBody)
