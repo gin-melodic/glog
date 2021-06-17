@@ -19,7 +19,7 @@ package gin_logger
 import (
 	"fmt"
 	"github.com/cockroachdb/errors"
-	"github.com/gin7758258/gin-logger.git/internal/setup"
+	"github.com/gin7758258/gin-logger/internal/setup"
 	"github.com/sirupsen/logrus"
 	"io"
 	"sync"
