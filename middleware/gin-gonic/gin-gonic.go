@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"github.com/cockroachdb/errors"
 	"github.com/gin-gonic/gin"
-	ginlogger "github.com/gin7758258/gin-logger"
+	ginlogger "github.com/gin7758258/glog"
 	"io/ioutil"
 	"net/http"
 	"net/url"
