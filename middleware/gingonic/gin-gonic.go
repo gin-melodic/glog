@@ -13,17 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-The package provide common logger middleware for gin-gonic/gin(https://github.com/gin-gonic/gin)
+The package provide common logger middleware for gingonic/gin(https://github.com/gin-gonic/gin)
 */
 
-package gin_gonic
+package gingonic
 
 import (
 	"bytes"
 	"fmt"
 	"github.com/cockroachdb/errors"
 	"github.com/gin-gonic/gin"
-	ginlogger "github.com/gin7758258/glog"
+	"github.com/gin7758258/glog"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -76,7 +76,7 @@ func (bw bodyWriter) WriteString(s string) (int, error) {
 	return bw.ResponseWriter.WriteString(s)
 }
 
-// InjectLogger common logger middleware for gin-gonic/gin
+// InjectLogger common logger middleware for gingonic/gin
 func InjectLogger(options *Options) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// performance recording
@@ -94,7 +94,7 @@ func InjectLogger(options *Options) gin.HandlerFunc {
 			requestExtInfo = options.CustomRequest(c.Request) + " |"
 		}
 		// output request
-		ginlogger.ShareLogger().Infof("REQ -> | %15s | %s %s | %s | %s %s", c.ClientIP(), c.Request.Method,
+		glog.ShareLogger().Infof("REQ -> | %15s | %s %s | %s | %s %s", c.ClientIP(), c.Request.Method,
 			path, query, requestExtInfo, body)
 
 		// parse response
@@ -118,9 +118,9 @@ func InjectLogger(options *Options) gin.HandlerFunc {
 			responseExtInfo = options.CustomResponseWriter(c.Writer) + " |"
 		}
 		// output response
-		logFunc := ginlogger.ShareLogger().Infof
+		logFunc := glog.ShareLogger().Infof
 		if c.Writer.Status() > http.StatusBadRequest {
-			logFunc = ginlogger.ShareLogger().Errorf
+			logFunc = glog.ShareLogger().Errorf
 		}
 		logFunc("<- RESP | %15s | %3d | %13v | %s %s | %s %s", c.ClientIP(), c.Writer.Status(),
 			excuteDurtion, c.Request.Method, path, responseExtInfo, respBody)

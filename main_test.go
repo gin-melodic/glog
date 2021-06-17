@@ -1,4 +1,4 @@
-package gin_logger
+package glog
 
 import (
 	"github.com/sirupsen/logrus"
