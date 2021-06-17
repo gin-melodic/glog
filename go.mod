@@ -1,4 +1,4 @@
-module github.com/gin7758258/gin-logger.git
+module github.com/gin7758258/gin-logger
 
 go 1.16
 
