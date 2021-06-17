@@ -3,7 +3,7 @@ package gin_gonic
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	ginlogger "github.com/gin7758258/gin-logger"
+	ginlogger "github.com/gin7758258/glog"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"io"
