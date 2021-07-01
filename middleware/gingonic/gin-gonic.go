@@ -137,9 +137,7 @@ func parseRequestBody(c *gin.Context, limit uint) (string, error) {
 			c.Request.URL.Path, err)
 	}
 	// resume request body
-	if c.Request.Body == nil {
-		c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(b))
-	}
+	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(b))
 	// deal unicode char in body
 	br := []rune(string(b[:]))
 	body.WriteString(limitBeautyBody(br, limit))
