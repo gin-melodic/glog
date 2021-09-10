@@ -11,4 +11,6 @@ require (
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.4.0
+	gorm.io/driver/sqlite v1.1.4
+	gorm.io/gorm v1.21.15
 )
