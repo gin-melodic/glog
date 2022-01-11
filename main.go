@@ -19,7 +19,7 @@ package glog
 import (
 	"fmt"
 	"github.com/cockroachdb/errors"
-	"github.com/gin7758258/glog/internal/setup"
+	"github.com/gin-melodic/glog/internal/setup"
 	"github.com/sirupsen/logrus"
 	"io"
 	"sync"
@@ -31,14 +31,14 @@ var sl *logrus.Logger
 
 // LoggerOptions Init options
 type LoggerOptions struct {
-	MinAllowLevel	logrus.Level
+	MinAllowLevel logrus.Level
 	// When HighPerformance is true, logger won't auto record report file & line
-	HighPerformance	bool
-	OutputDir		string
-	FilePrefix		string
+	HighPerformance bool
+	OutputDir       string
+	FilePrefix      string
 	// Logs older than the specified number of SaveDay
 	// will be automatically cleared
-	SaveDay			time.Duration
+	SaveDay time.Duration
 	// ExtLoggerWriter write to other output,
 	// like os.Stdout in dev. Default write to logFile
 	ExtLoggerWriter  []io.Writer
@@ -49,7 +49,9 @@ type LoggerOptions struct {
 // MUST call it before ShareLogger
 func InitGlobalLogger(opt *LoggerOptions) (initErr error) {
 	globalOnce.Do(func() {
-		if sl != nil { return }
+		if sl != nil {
+			return
+		}
 		l, err := setup.New(&setup.Options{
 			BaseDir:          opt.OutputDir,
 			Level:            opt.MinAllowLevel,

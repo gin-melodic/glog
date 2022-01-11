@@ -10,7 +10,7 @@ import (
 
 func TestInitGlobalLogger(t *testing.T) {
 	err := InitGlobalLogger(&LoggerOptions{
-		MinAllowLevel:    logrus.DebugLevel	,
+		MinAllowLevel:    logrus.DebugLevel,
 		HighPerformance:  false,
 		OutputDir:        "./test-log",
 		FilePrefix:       "cyto",
@@ -29,17 +29,17 @@ func TestUsageExample(t *testing.T) {
 	// Must init before use logger
 	const kOutputDir = "./test-log"
 	err := InitGlobalLogger(&LoggerOptions{
-		MinAllowLevel:    logrus.DebugLevel	,
-		HighPerformance:  true,
-		OutputDir:        kOutputDir,
-		FilePrefix:       "cyto",
-		SaveDay:          7,
-		ExtLoggerWriter:  []io.Writer{os.Stdout},
+		MinAllowLevel:   logrus.DebugLevel,
+		HighPerformance: true,
+		OutputDir:       kOutputDir,
+		FilePrefix:      "cyto",
+		SaveDay:         7,
+		ExtLoggerWriter: []io.Writer{os.Stdout},
 	})
 	assert.Nil(t, err)
 
 	// global logger
-	ShareLogger().Error("error message.")
+	ShareLogger().Warn("error message.")
 	param := 123
 	ShareLogger().Infof("param: %d", param)
 
@@ -53,7 +53,7 @@ func TestUsageExample(t *testing.T) {
 		CustomTimeLayout: "2006/01/02 15:04:05",
 	})
 	assert.Nil(t, err)
-	partnerLogger.Error("test partner log")
+	partnerLogger.Info("test partner log")
 
 	// for middleware usage see test cases in specific modules.
 
