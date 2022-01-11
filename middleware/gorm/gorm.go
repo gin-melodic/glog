@@ -19,7 +19,7 @@ Usage (e.g. sqlite):
 
 ```go
 import (
-	gormLogger "github.com/gin7758258/glog/middleware/gorm"
+	gormLogger "github.com/gin-melodic/glog/middleware/gorm"
 )
 
 db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{
@@ -33,7 +33,7 @@ package gorm
 import (
 	"context"
 	"errors"
-	"github.com/gin7758258/glog"
+	"github.com/gin-melodic/glog"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -42,8 +42,8 @@ import (
 )
 
 type Options struct {
-	SlowThreshold         time.Duration
-	SourceField           string
+	SlowThreshold             time.Duration
+	SourceField               string
 	IgnoreRecordNotFoundError bool
 }
 
@@ -95,5 +95,3 @@ func (l *sqlLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql s
 	// debug mode
 	glog.ShareLogger().WithContext(ctx).WithFields(f).Debugf("[SQL][cost %s] %s", dt, sql)
 }
-
-

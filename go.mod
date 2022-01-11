@@ -1,4 +1,4 @@
-module github.com/gin7758258/glog
+module github.com/gin-melodic/glog
 
 go 1.16
 

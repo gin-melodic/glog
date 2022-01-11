@@ -18,7 +18,7 @@ package setup
 
 import (
 	"github.com/cockroachdb/errors"
-	"github.com/gin7758258/glog/internal/formatter"
+	"github.com/gin-melodic/glog/internal/formatter"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
@@ -29,11 +29,11 @@ import (
 
 // Options logger setup options, BaseDir is requirement, RewriteDuration default 7 days
 type Options struct {
-	BaseDir         string
+	BaseDir string
 
-	Level           logrus.Level
-	ReportCaller    bool
-	LogFilePrefix   string
+	Level          logrus.Level
+	ReportCaller   bool
+	LogFilePrefix  string
 	RotateDuration time.Duration
 	// ExtLoggerWriter write to other output, like os.Stdout in dev. Default write to logFile
 	ExtLoggerWriter  []io.Writer
@@ -77,18 +77,18 @@ func New(opt *Options) (*logrus.Logger, error) {
 	// combine log
 	cbFmt := opt.BaseDir + "/" + prefix + "combine-%Y%m%d.log"
 	cbWriter, err := rotatelogs.New(cbFmt,
-		rotatelogs.WithLinkName(opt.BaseDir + "/latest-combine-" + prefix + "log"),
+		rotatelogs.WithLinkName(opt.BaseDir+"/latest-combine-"+prefix+"log"),
 		rotatelogs.WithMaxAge(maxAge),
-		rotatelogs.WithRotationTime(24 * time.Hour))
+		rotatelogs.WithRotationTime(24*time.Hour))
 	if err != nil {
 		return nil, errors.WithMessage(err, "rotate combine log error")
 	}
 	// error log
 	errorFmt := opt.BaseDir + "/" + prefix + "error-%Y%m%d.log"
 	errorWriter, err := rotatelogs.New(errorFmt,
-		rotatelogs.WithLinkName(opt.BaseDir + "/latest-error-" + prefix + "log"),
+		rotatelogs.WithLinkName(opt.BaseDir+"/latest-error-"+prefix+"log"),
 		rotatelogs.WithMaxAge(maxAge),
-		rotatelogs.WithRotationTime(24 * time.Hour))
+		rotatelogs.WithRotationTime(24*time.Hour))
 	if err != nil {
 		return nil, errors.WithMessage(err, "rotate error log error")
 	}
@@ -96,8 +96,8 @@ func New(opt *Options) (*logrus.Logger, error) {
 		logrus.PanicLevel: io.MultiWriter(cbWriter, errorWriter),
 		logrus.FatalLevel: io.MultiWriter(cbWriter, errorWriter),
 		logrus.ErrorLevel: io.MultiWriter(cbWriter, errorWriter),
-		logrus.WarnLevel: cbWriter,
-		logrus.InfoLevel: cbWriter,
+		logrus.WarnLevel:  cbWriter,
+		logrus.InfoLevel:  cbWriter,
 		logrus.DebugLevel: cbWriter,
 		logrus.TraceLevel: cbWriter,
 	}

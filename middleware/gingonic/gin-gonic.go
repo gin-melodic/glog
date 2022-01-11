@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"github.com/cockroachdb/errors"
 	"github.com/gin-gonic/gin"
-	"github.com/gin7758258/glog"
+	"github.com/gin-melodic/glog"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -36,7 +36,7 @@ import (
 // Options The options of the common middleware
 type Options struct {
 	// BodyMaxSize Limit max characters of request body, default is 500
-	BodyMaxSize	uint
+	BodyMaxSize uint
 	// IgnoreExtensions Ignore some specific resources by extension in http request,
 	// like ".html", ".jpg", etc.
 	// default is DefaultIgnoreExtensions
@@ -114,7 +114,7 @@ func InjectLogger(options *Options) gin.HandlerFunc {
 			}
 		}
 		responseExtInfo := ""
-		if  options.CustomResponseWriter != nil {
+		if options.CustomResponseWriter != nil {
 			responseExtInfo = options.CustomResponseWriter(c.Writer) + " |"
 		}
 		// output response
@@ -128,12 +128,14 @@ func InjectLogger(options *Options) gin.HandlerFunc {
 }
 
 func parseRequestBody(c *gin.Context, limit uint) (string, error) {
-	if strings.ToUpper(c.Request.Method) != "POST" || c.Request.Body == nil { return "", nil }
+	if strings.ToUpper(c.Request.Method) != "POST" || c.Request.Body == nil {
+		return "", nil
+	}
 	var body bytes.Buffer
 	// ioutil.ReadAll for request body may clear it!!!
 	b, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		return "", errors.WithMessagef( err ,"[GINLOG]Read body in request %s error. %s",
+		return "", errors.WithMessagef(err, "[GINLOG]Read body in request %s error. %s",
 			c.Request.URL.Path, err)
 	}
 	// resume request body
@@ -146,7 +148,9 @@ func parseRequestBody(c *gin.Context, limit uint) (string, error) {
 
 func limitBeautyBody(body []rune, limit uint) string {
 	l := len(body)
-	if l <= 0 { return "" }
+	if l <= 0 {
+		return ""
+	}
 	// slice body content
 	ellipsis := ""
 	if l > int(limit) {
