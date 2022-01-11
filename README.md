@@ -13,10 +13,10 @@ This toolkit provides rotation logging capabilities.
 package main
 
 import (
-	"github.com/gin7758258/glog"
+	"github.com/gin-melodic/glog"
 	"github.com/gin-gonic/gin"
-	gingonicLogger "github.com/gin7758258/glog/middleware/gingonic"
-	gormLogger "github.com/gin7758258/glog/middleware/gorm"
+	gingonicLogger "github.com/gin-melodic/glog/middleware/gingonic"
+	gormLogger "github.com/gin-melodic/glog/middleware/gorm"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
