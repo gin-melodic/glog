@@ -1,7 +1,7 @@
 package gorm
 
 import (
-	"github.com/gin7758258/glog"
+	"github.com/gin-melodic/glog"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/sqlite"
@@ -16,18 +16,20 @@ const tDir = "./gorm-log"
 func setUp(resetLog bool, opt Options) (db *gorm.DB, err error) {
 	if resetLog {
 		err = glog.InitGlobalLogger(&glog.LoggerOptions{
-			MinAllowLevel:    logrus.DebugLevel,
-			OutputDir:        tDir,
-			FilePrefix:       "gorm-test",
-			SaveDay:          1,
-			ExtLoggerWriter:  []io.Writer{os.Stdout},
+			MinAllowLevel:   logrus.DebugLevel,
+			OutputDir:       tDir,
+			FilePrefix:      "gorm-test",
+			SaveDay:         1,
+			ExtLoggerWriter: []io.Writer{os.Stdout},
 		})
-		if err != nil { return }
+		if err != nil {
+			return
+		}
 	}
 	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{
 		Logger: New(opt),
 	})
-	return 
+	return
 }
 
 func setDown() {
@@ -49,8 +51,8 @@ func TestDBLogger(t *testing.T) {
 	assert.Nil(t, err)
 	db.Exec(createTableSql)
 	db.Exec("SELECT * FROM COMPANY;")
-	assert.FileExists(t, tDir + "/latest-combine-gorm-test-log")
+	assert.FileExists(t, tDir+"/latest-combine-gorm-test-log")
 	db.Exec("ERROR SQL!!!")
-	assert.FileExists(t, tDir + "/latest-error-gorm-test-log")
+	assert.FileExists(t, tDir+"/latest-error-gorm-test-log")
 	setDown()
 }
