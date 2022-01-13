@@ -17,9 +17,9 @@ limitations under the License.
 package setup
 
 import (
-	"github.com/cockroachdb/errors"
 	"github.com/gin-melodic/glog/internal/formatter"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/pkg/errors"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"io"
