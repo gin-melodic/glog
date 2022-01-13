@@ -18,8 +18,8 @@ package glog
 
 import (
 	"fmt"
-	"github.com/cockroachdb/errors"
 	"github.com/gin-melodic/glog/internal/setup"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"io"
 	"sync"
