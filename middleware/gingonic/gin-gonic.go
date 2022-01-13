@@ -21,9 +21,9 @@ package gingonic
 import (
 	"bytes"
 	"fmt"
-	"github.com/cockroachdb/errors"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-melodic/glog"
+	"github.com/pkg/errors"
 	"io/ioutil"
 	"net/http"
 	"net/url"
