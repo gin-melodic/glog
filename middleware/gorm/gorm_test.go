@@ -33,6 +33,7 @@ func setUp(resetLog bool, opt Options) (db *gorm.DB, err error) {
 }
 
 func setDown() {
+	_ = glog.ShareLogger().Close()
 	_ = os.RemoveAll("test.db")
 	_ = os.RemoveAll(tDir)
 }

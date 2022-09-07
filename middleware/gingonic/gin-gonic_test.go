@@ -26,6 +26,7 @@ import (
 	"net/http"
 	"os"
 	"testing"
+	"time"
 )
 
 func testLogHandle(c *gin.Context) {}
@@ -55,13 +56,15 @@ func TestInjectLogger(t *testing.T) {
 	}
 
 	go func() {
+		time.Sleep(1 * time.Second)
 		c := &http.Client{}
 		req, _ := http.NewRequest("GET", "http://127.0.0.1:8180/logTest", nil)
 
 		_, _ = c.Do(req)
 		// check log
 		assert.FileExists(t, tDir+"/latest-combine-gingonic-test-log")
-		_ = os.RemoveAll(tDir)
+		assert.NoErrorf(t, glog.ShareLogger().Close(), "close log file failed")
+		assert.NoErrorf(t, os.RemoveAll(tDir), "remove test log dir failed")
 
 		// print request header
 		req.Header.Set("SPEC_HEADER", "123")
