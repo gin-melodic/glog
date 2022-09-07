@@ -40,7 +40,14 @@ type Options struct {
 	CustomTimeLayout string
 }
 
-func New(opt *Options) (*logrus.Logger, error) {
+type Logger struct {
+	*logrus.Logger
+	options        *Options
+	logFileHandler *os.File
+	logWriters     []*rotatelogs.RotateLogs
+}
+
+func New(opt *Options) (*Logger, error) {
 	mutePipe, err := os.OpenFile(os.DevNull, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -103,5 +110,24 @@ func New(opt *Options) (*logrus.Logger, error) {
 	}
 	hook := lfshook.NewHook(lfsMap, &formatter.Formatter{TimeStampLayout: opt.CustomTimeLayout})
 	lc.AddHook(hook)
-	return lc, nil
+	logger := &Logger{
+		Logger:         lc,
+		options:        opt,
+		logFileHandler: mutePipe,
+		logWriters:     []*rotatelogs.RotateLogs{cbWriter, errorWriter},
+	}
+	return logger, nil
+}
+
+// Close ALL internal file writer handle
+func (l *Logger) Close() error {
+	if err := l.logFileHandler.Close(); err != nil {
+		return errors.WithStack(err)
+	}
+	for _, w := range l.logWriters {
+		if err := w.Close(); err != nil {
+			return errors.WithStack(err)
+		}
+	}
+	return nil
 }

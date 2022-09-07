@@ -25,16 +25,15 @@ import (
 )
 
 func TestNew(t *testing.T) {
-	_ = os.RemoveAll("./test-logs")
 	l, err := New(&Options{
-		Level: logrus.DebugLevel,
-		ReportCaller: true,
-		BaseDir: "./test-logs",
-		LogFilePrefix: "test",
+		Level:           logrus.DebugLevel,
+		ReportCaller:    true,
+		BaseDir:         "./test-logs",
+		LogFilePrefix:   "test",
 		ExtLoggerWriter: []io.Writer{os.Stdout},
 	})
 	assert.Nil(t, err)
-	l.Traceln("123")	// this stmt won't create log file
+	l.Traceln("123") // this stmt won't create log file
 	_, err = os.Stat("./test-logs/latest-combine-test-log")
 	assert.True(t, os.IsNotExist(err))
 
@@ -52,5 +51,9 @@ func TestNew(t *testing.T) {
 	_, err = os.Stat("./test-logs/latest-error-test-log")
 	assert.Nil(t, err)
 
-	_ = os.RemoveAll("./test-logs")
+	err = l.Close()
+	assert.NoErrorf(t, err, "close log file failed: %v", err)
+
+	err = os.RemoveAll("./test-logs")
+	assert.NoErrorf(t, err, "remove test log dir failed")
 }
