@@ -27,7 +27,7 @@ import (
 )
 
 var globalOnce = sync.Once{}
-var sl *logrus.Logger
+var sl *setup.Logger
 
 // LoggerOptions Init options
 type LoggerOptions struct {
@@ -72,7 +72,7 @@ func InitGlobalLogger(opt *LoggerOptions) (initErr error) {
 
 // ShareLogger Get global logger handle
 // MUST InitGlobalLogger before call it
-func ShareLogger() *logrus.Logger {
+func ShareLogger() *setup.Logger {
 	if sl == nil {
 		fmt.Println("[GINLOG]Please call InitGlobalLogger first.")
 		return nil
@@ -82,7 +82,7 @@ func ShareLogger() *logrus.Logger {
 
 // NewLoggerHandle Sometimes, when you need a log instance to print some
 // specific log to a file, this method can provide that functionality
-func NewLoggerHandle(opt *LoggerOptions) (logger *logrus.Logger, err error) {
+func NewLoggerHandle(opt *LoggerOptions) (logger *setup.Logger, err error) {
 	logger, err = setup.New(&setup.Options{
 		BaseDir:          opt.OutputDir,
 		Level:            opt.MinAllowLevel,

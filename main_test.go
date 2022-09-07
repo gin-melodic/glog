@@ -21,7 +21,8 @@ func TestInitGlobalLogger(t *testing.T) {
 	assert.Nil(t, err)
 	assert.DirExists(t, "./test-log")
 	assert.NotNil(t, sl)
-	_ = os.RemoveAll("./test-log")
+	assert.NoErrorf(t, ShareLogger().Close(), "close logger failed")
+	assert.NoErrorf(t, os.RemoveAll("./test-log"), "remove test log dir failed")
 }
 
 // Usage Example
